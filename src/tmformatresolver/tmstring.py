@@ -31,12 +31,12 @@ def get_color(colorkey):
     else:
         # consume first character, default color white, return unresolved chars
         return "", colorkey[1:]
-    if colorkey[1] in color_chars:
+    if len(colorkey) > 1 and colorkey[1] in color_chars:
         color = color[0] + colorkey[1] + color[2]
     else:
         # resolved color, unresolved keys
         return color, colorkey[1:]
-    if colorkey[2] in color_chars:
+    if len(colorkey) > 2 and colorkey[2] in color_chars:
         color = color[:2] + colorkey[2]
     else:
         # resolved color, unresolved keys

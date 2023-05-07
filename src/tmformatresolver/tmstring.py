@@ -110,13 +110,17 @@ class TMString:
         for loopidx, block in enumerate(parts):
             # escape "<" and ">" to prevent injections
             block = block.replace("<", "&lt;").replace(">", "&gt;")
-            if loopidx == 0 and tmstring[0] == "$" and block == "":
-                # `string` starts with a $, `split("$")` yields a "" as first list element
-                continue
-            if loopidx == 0 and tmstring[0] != "$":
-                # `string` starts without any formatters, so skip evaluation of this block
-                htmlstr += block
-                continue
+            try:
+                if loopidx == 0 and tmstring[0] == "$" and block == "":
+                    # `string` starts with a $, `split("$")` yields a "" as first list element
+                    continue
+                if loopidx == 0 and tmstring[0] != "$":
+                    # `string` starts without any formatters, so skip evaluation of this block
+                    htmlstr += block
+                    continue
+            except IndexError:
+                # tmstring[0] does not exist, most likely an empty string was handed in.
+                pass
             if block == "":
                 # must have been a $$. Insert $
                 htmlstr += "&#36;"

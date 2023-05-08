@@ -120,7 +120,7 @@ class TMString:
                     continue
             except IndexError:
                 # tmstring[0] does not exist, most likely an empty string was handed in.
-                pass
+                continue
             if block == "":
                 # must have been a $$. Insert $
                 htmlstr += "&#36;"
